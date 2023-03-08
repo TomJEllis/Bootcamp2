@@ -16,9 +16,6 @@ class Seat:
 
    def is_empty(self):
       return self.first_name == ''
-
-   # def print_seat(self):
-   #    print(f'{self.first_name} {self.last_name}, Paid: {self.paid:.2f}')
    
    def __str__(self):
       return (f"{self.first_name} {self.last_name}, Paid: {self.paid:.2f}\n")
@@ -43,13 +40,16 @@ class SeatReservation:
 
    def reserve_seat(self):
       seat_num = int(input('Enter seat num:\n'))
-      if not self.available_seats[seat_num].is_empty():
-         print('Seat not empty')
+      if seat_num > 0 and seat_num < self.num_seats:
+         if not self.available_seats[seat_num].is_empty():
+            print('Seat not empty')
+         else:
+            fname = input('Enter first name:\n')
+            lname = input('Enter last name:\n')
+            paid = float(input('Enter amount paid:\n'))
+            self.available_seats[seat_num].reserve(fname, lname, paid)
       else:
-         fname = input('Enter first name:\n')
-         lname = input('Enter last name:\n')
-         paid = float(input('Enter amount paid:\n'))
-         self.available_seats[seat_num].reserve(fname, lname, paid)
+         print("Invalid seat num")
    
 def seat_reservation_menu(seat_reservations):
    command = input('Enter command (p/r/q): ')
@@ -66,8 +66,3 @@ def seat_reservation_menu(seat_reservations):
 if __name__ == "__main__":
    seat_reservation = SeatReservation()
    seat_reservation_menu(seat_reservation)
-
-
-
-
-
